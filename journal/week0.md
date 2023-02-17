@@ -57,7 +57,15 @@ The figure below proofs that a budget was created from the template. It set the 
 
 1. Conceptual Diagram
 
+It's plotted in [this Lucid Chart link](https://lucid.app/lucidchart/be8a8049-f889-46c4-83b9-cd52f06a9445/edit?viewport_loc=13%2C-90%2C1722%2C815%2Cvi_xnvX6lTaw&invitationId=inv_9600c9fb-e606-403a-888a-9fe299d682da). Screenshot of the conceptual diagram is attached below.
+
+![Screenshot of conceptual diagram](assets/week00-screenshot-conceptual-diagram.png)
+
 2. Logical Architectural Diagram
+
+It's plotted in [this Lucid Chart link](https://lucid.app/lucidchart/be8a8049-f889-46c4-83b9-cd52f06a9445/edit?viewport_loc=-311%2C177%2C2037%2C964%2C0_0&invitationId=inv_9600c9fb-e606-403a-888a-9fe299d682da). Screenshot of the logical architectural diagram is attached below.
+
+![Screenshot of logical architectural diagram](assets/week00-screenshot-architectural-diagram.png)
 
 
 ## Homework Challenges
