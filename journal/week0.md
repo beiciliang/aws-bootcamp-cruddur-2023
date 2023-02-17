@@ -1,8 +1,13 @@
 # Week 0 — Billing and Architecture
 
-## Required Homework
+Table of Contents
 
-### AWS Setup & Use CloudShell
+- [AWS Setup & Use CloudShell](#aws-setup--use-cloudshell)
+- [Gitpod Workspace](#gitpod-workspace)
+- [Alert Setup](#alert-setup)
+- [Recreation in Lucid Charts](#recreation-in-lucid-charts)
+
+## AWS Setup & Use CloudShell
 
 Sign in as the root user, and do the following setups in the console
 - IAM Security: assign MFA to improve security for this account.
@@ -12,12 +17,13 @@ Sign in as the root user, and do the following setups in the console
 Log out the root user, and sign in as the newly created IAM user to
 - IAM Security: since this user has `AdministratorAccess`, it's better to assign MFA to improve security for this account.
 - IAM Users: create access key in security credentials using CLI.
-- Launch AWS CloudShell in the browser: run `aws --cli-auto-prompt` and then do a sanity check by `aws sts get-caller-identity`. It's shown that `UserId`, `Account` and `Arn` match the user info as presented in the figure below.
+
+Launch AWS CloudShell in the browser: run `aws --cli-auto-prompt` and then do a sanity check by `aws sts get-caller-identity`. It's shown that `UserId`, `Account` and `Arn` match the user info as presented in the figure below.
 
 ![Info of the AWS admin user](assets/week00-aws-user.png)
 
 
-### Gitpod Workspace
+## Gitpod Workspace
 
 1. Install AWS CLI
 
@@ -36,7 +42,7 @@ Now if we Gitpod the `week-0` branch and run `aws sts get-caller-identity`, it r
 ![Proof of working AWS CLI](assets/week00-proof-of-aws-cli.png)
 
 
-### Alert Setup
+## Alert Setup
 
 Alerts can be created using the AWS console, or AWS CLI.
 
@@ -53,7 +59,7 @@ The figure below proofs that a budget was created from the template. It set the 
 ![Proof of working budget](assets/week00-proof-of-budget.png)
 
 
-### Recreation in Lucid Charts
+## Recreation in Lucid Charts
 
 1. Conceptual Diagram
 
@@ -66,7 +72,3 @@ It's plotted in [this Lucid Chart link](https://lucid.app/lucidchart/be8a8049-f8
 It's plotted in [this Lucid Chart link](https://lucid.app/lucidchart/be8a8049-f889-46c4-83b9-cd52f06a9445/edit?viewport_loc=-311%2C177%2C2037%2C964%2C0_0&invitationId=inv_9600c9fb-e606-403a-888a-9fe299d682da). Screenshot of the logical architectural diagram is attached below.
 
 ![Screenshot of logical architectural diagram](assets/week00-screenshot-architectural-diagram.png)
-
-
-## Homework Challenges
-
