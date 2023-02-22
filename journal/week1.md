@@ -86,7 +86,7 @@ In gitpod's database explore, connect to the PostgreSQL. Run command `psql -U po
 
 1. Run the dockerfile CMD as an external script
 
-As seen in , we can run the flask backend as command lines corresponding to the CMD in [backend-flask/Dockerfile](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-1/backend-flask/Dockerfile)).
+As seen in [Get the apps running locally](#get-the-apps-running-locally), we can run the flask backend as command lines corresponding to the CMD in [backend-flask/Dockerfile](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-1/backend-flask/Dockerfile).
 
 2. Push and tag a image to DockerHub (they have a free tier)
 
