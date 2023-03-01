@@ -64,7 +64,7 @@ As seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023
 
 After `docker compose up` to launch the app and browse the backend endpoint of `/api/activities/home` for a couple of times, logs can be viewed in AWS CloudWatch Log group of `cruddur` as shown in the screenshot below.
 
-![Proof of cloudwatch log](week02-cloudwatch-log.png)
+![Proof of cloudwatch log](assets/week02-cloudwatch-log.png)
 
 Then we comment codes related to AWS X-Ray and CloudWatch Logger in order to save our AWS budgets.
 
