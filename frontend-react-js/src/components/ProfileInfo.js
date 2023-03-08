@@ -4,6 +4,7 @@ import React from "react";
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
+import { Auth } from 'aws-amplify';
 
 export default function ProfileInfo(props) {
   const [popped, setPopped] = React.useState(false);
@@ -12,16 +13,25 @@ export default function ProfileInfo(props) {
     setPopped(!popped)
   }
 
+  // const signOut = async () => {
+  //   console.log('signOut')
+  //   // [TODO] Authenication
+  //   Cookies.remove('user.logged_in')
+  //   //Cookies.remove('user.name')
+  //   //Cookies.remove('user.username')
+  //   //Cookies.remove('user.email')
+  //   //Cookies.remove('user.password')
+  //   //Cookies.remove('user.confirmation_code')
+  //   window.location.href = "/"
+  // }
   const signOut = async () => {
-    console.log('signOut')
-    // [TODO] Authenication
-    Cookies.remove('user.logged_in')
-    //Cookies.remove('user.name')
-    //Cookies.remove('user.username')
-    //Cookies.remove('user.email')
-    //Cookies.remove('user.password')
-    //Cookies.remove('user.confirmation_code')
-    window.location.href = "/"
+    try {
+        await Auth.signOut({ global: true });
+        window.location.href = "/"
+        localStorage.removeItem("access_token")
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
   }
 
   const classes = () => {
