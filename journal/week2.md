@@ -39,9 +39,13 @@ To instrument AWS X-Ray into backend flask application, make the following chang
 - Instrument AWS X-Ray in `/backend-flask/app.py`
 - Add `xray-daemon` and configure environment variables in `docker-compose.yml`
 
-Then we can add segments and subsegments in `backend-flask/services/user_activities.py` for example as shown in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/a5a131f954cff5516897fbf9269d459e0a2b383d). These data can be sent data back to the X-Ray API.
+Then we can add segments and subsegments in `backend-flask/services/user_activities.py` for example as shown in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/fabb76a787b233153a6e50a33af502e43e2727c0). These data can be sent data back to the X-Ray API.
 
-To observe X-Ray traces within the AWS Console, setup AWS X-Ray resources in `aws/json/xray.json` as seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/0fbb8e89bb3fc810e58f1d3e5fe7699a12da6af2), then run the following command lines to create tracing groups and sampling rules:
+After docker compose up, we can browse the home and a user page where we've add xray recorder to capture. Then we can observe X-Ray traces within the AWS Console as shown in the screenshot below.
+
+![Proof of xray trace](assets/week02-xray-trace.png)
+
+We can setup AWS X-Ray resources in `aws/json/xray.json` as seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/0fbb8e89bb3fc810e58f1d3e5fe7699a12da6af2), then run the following command lines to create tracing groups and sampling rules:
 
 ```sh
 aws xray create-group --group-name "Cruddur" --filter-expression "service(\"backend-flask\")" 
@@ -66,7 +70,7 @@ After `docker compose up` to launch the app and browse the backend endpoint of `
 
 ![Proof of cloudwatch log](assets/week02-cloudwatch-log.png)
 
-Then we comment codes related to AWS X-Ray and CloudWatch Logger in order to save our AWS budgets.
+Then we comment codes related to CloudWatch Logger in order to save our AWS budgets.
 
 ## Rollbar for Error Logging
 
@@ -91,4 +95,5 @@ We can further trigger an error and then observe this error with Rollbar.
 ## References
 
 - AWS Developer Guide for AWS X-Ray daemon ([link](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html))
+- How to add custom X-Ray Segments for Containerised Flask Application ([link](https://olley.hashnode.dev/aws-free-cloud-bootcamp-instrumenting-aws-x-ray-subsegments))
 - Rollbar Flask Example ([link](https://github.com/rollbar/rollbar-flask-example/blob/master/hello.py))

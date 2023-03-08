@@ -50,10 +50,10 @@ from flask import got_request_exception
 # LOGGER.addHandler(cw_handler)
 # LOGGER.info("test log")
 
-# # x-ray initialization
-# # Comment for saving AWS budget
-# xray_url = os.getenv("AWS_XRAY_URL")
-# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+# x-ray initialization
+# Comment for saving AWS budget
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 # honeycomb initialization
 # Tracing and an exporter that can send data to Honeycomb
@@ -75,7 +75,7 @@ cognito_jwt_token = CognitoJwtToken(
 )
 
 # x-ray
-# XRayMiddleware(app, xray_recorder)
+XRayMiddleware(app, xray_recorder)
 
 # honeycomb
 # Initialize automatic instrumentation with Flask
@@ -167,6 +167,7 @@ def data_create_message():
 
 
 @app.route("/api/activities/home", methods=['GET'])
+@xray_recorder.capture('activities_home')
 def data_home():
     # data = HomeActivities.run()
     # data = HomeActivities.run(logger=LOGGER)
@@ -192,6 +193,7 @@ def data_notifications():
 
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
+@xray_recorder.capture('activities_users')
 def data_handle(handle):
     model = UserActivities.run(handle)
     if model['errors'] is not None:
