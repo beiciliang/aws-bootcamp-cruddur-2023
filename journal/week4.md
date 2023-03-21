@@ -134,7 +134,7 @@ As seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023
 - Change `backend-flask/services/create_activity.py` and `backend-flask/services/home_activities.py` to execute SQL commands and save the results for display
 - Related SQL commands are saved in `create.sql`, `home.sql`, and `object.sql` under `backend-flask/db/sql/activities/`
 
-If the user signs in and creates an activity now, the backend shows uuid none error. A temporary fix is to change the value of `user_handle` to the username of the sign-in user in `backend-flask/app.py`. In my case, it is `user_handle = 'beiciliang'` as seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/67c2a277af11edbe4061e6b9e6f136afe1424334). Now I can successfully create three activities with different expire time as shown in the screenshot below.
+If the user signs in and creates an activity now, the backend shows uuid none error. A temporary fix is to change the value of `user_handle` to the username of the sign-in user in `backend-flask/app.py`. In my case, it is `user_handle = 'beiciliang'` as seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/67c2a277af11edbe4061e6b9e6f136afe1424334). Now I can successfully create three activities with different expire time as shown in the screenshot below. (UPDATE: instead of hard-coded `user_handle`, in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/0eef44dbc83ff2f34ed496a5bc3c7de052c0f1f2), we managed to pass this from the frontend to route of `/api/activities`.)
 
 ![Proof of create activity](assets/week04-create-activity.png)
 
