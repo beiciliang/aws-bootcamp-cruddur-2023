@@ -32,7 +32,7 @@ def get_my_user_uuid():
       users.handle =%(handle)s
   """
     uuid = db.query_value(sql, {
-        'handle':  'andrewbrown'
+        'handle':  'beiciliang'
     })
     return uuid
 
