@@ -61,12 +61,12 @@ Add command in `.gitpod.yml` as seen in [this commit](https://github.com/beicili
 
 For the local Postgres database:
 
-- Update seed data in `backend-flask/db/seed.sql` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/db/seed.sql)) to have 3 users and 1 activity (NOTE: set one user the same as the one you used for cruddur signin)
-- Create `backend-flask/bin/cognito/list-users` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/cognito/list-users)) to list data of users saved in AWS Cognito
-- Create `backend-flask/bin/db/update_cognito_user_ids` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/db/update_cognito_user_ids)) to update users in seed data with actual Cognito IDs if exist
-- Set `CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"` in `docker-compose.yml` cause this week is working with the user data from the local Postgres database
+- Update seed data in `backend-flask/db/seed.sql` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/db/seed.sql)) to have 3 users and 1 activity (NOTE: set one user the same as the one you used for cruddur signin to avoid potential data conflicts).
+- Create `backend-flask/bin/cognito/list-users` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/cognito/list-users)) to list users data saved in AWS Cognito.
+- Create `backend-flask/bin/db/update_cognito_user_ids` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/db/update_cognito_user_ids)) to update users in the seed data with actual Cognito IDs if exist.
+- Set `CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"` in `docker-compose.yml`, because this week we are working with the users data queried from the local Postgres database named `cruddur`.
 
-Add `python "$bin_path/db/update_cognito_user_ids"` in the end of `backend-flask/bin/db/setup` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/db/setup)). If we compose up the docker and run the setup script, it will create Postgres database and two tables. In the `users` table, 1 user with handle `beiciliang` with be updated with actual AWS Cognito ID, which matches the value if we check with `./bin/cognito/list-users` as shown in the screenshot below.
+Add `python "$bin_path/db/update_cognito_user_ids"` to run `backend-flask/bin/db/update_cognito_user_ids` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/db/update_cognito_user_ids)) in the end of `backend-flask/bin/db/setup` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/db/setup)). If we compose up the docker and run the setup script, it will create a local Postgres database named `cruddur` with 2 tables. In the `users` table, 1 user with handle `beiciliang` will be updated with actual AWS Cognito ID, which matches the value if we check with `./bin/cognito/list-users` as shown in the screenshot below.
 
 ![Proof of updated cognito id](assets/week05-update-cognito-id.png)
 
@@ -74,18 +74,18 @@ We can also update a dummy cognito ID manually for another user `bayko` by the f
 
 ```sh
 ./bin/db/connect
-\x auto
 UPDATE public.users SET cognito_user_id = 'f73f4b05-a59e-468b-8a29-a1c39e7a2222' WHERE users.handle = 'bayko';
+\q
 ```
 
 ## DynamoDB Utility Scripts
 
-In the directory `backend-flask/bin/ddb/`, create the following utility scripts to easily setup and teardown and debug DynamoDB data.
+In the directory `backend-flask/bin/ddb/`, create the following utility scripts to easily setup, teardown, and debug DynamoDB data.
 
 - `schema-load` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/schema-load)): create a table named `cruddur-messages` either for DynamoDB local or on the AWS
 - `list-tables` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/list-tables)): list the name of tables we created
 - `drop` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/drop)): drop a table by its name, e.g. `drop cruddur-messages`
-- `seed` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/seed)): load the seed data into the table `cruddur-messages` with hard-coded `message_group_uuid` (NOTE: to avoid potential data conflict, I replaced `my_handle` from `andrewbrown` to `beiciliang`; `created_at` should be set back a couple of hours so that seed messages are not created for the future time)
+- `seed` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/seed)): load the seed data into the table `cruddur-messages` with hard-coded `message_group_uuid` (NOTE: to avoid potential data conflict, I replaced `my_handle` from `andrewbrown` to `beiciliang`; Plus, `created_at` should be set back a couple of hours so that seed messages are not created for the future time)
 - `scan` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/scan)): scan all the items saved in the table `cruddur-messages`
 - `patterns/get-conversation` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/patterns/get-conversation)): list messages associated with the hard-coded `message_group_uuid` and print the consumed capacity
 - `patterns/list-conversations` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-5/backend-flask/bin/ddb/patterns/list-conversations)): list message groups and print the consumed capacity (NOTE: this script uses functions from `backend-flask/lib/db.py`, which needs to be updated as seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/d9405cfc2ee5217fbec5798ee07115eab4368229#diff-4d4413b1b6b19e2bba84add763693470bf0abf242e3395c156c7b2a3a63b5ba1) and [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/294af409aae98f50c32f48ebc244d21c826434f6#diff-4d4413b1b6b19e2bba84add763693470bf0abf242e3395c156c7b2a3a63b5ba1))
@@ -335,16 +335,16 @@ We can visit url `https://<frontend_address>/messages/new/<handle>` to create an
 As seen in [this commit](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/commit/b3c241160494e0e5463ad908a245379d89252236), we can work with the DynamoDB on the AWS, and add a trigger to execute a Lambda function which can deal with DynamoDB stream events:
 
 - Comment `AWS_ENDPOINT_URL` in `docker-compose.yml`, then compose up and run `./bin/db/setup`
-- Update `./bin/ddb/schema-load` with a Global Secondary Index (GSI) and run `./bin/ddb/schema-load prod`
+- Update `./bin/ddb/schema-load` with a Global Secondary Index (GSI) and run `./bin/ddb/schema-load prod`, leading to a DynamoDB table named `cruddur-messages` created on our AWS
 - On AWS in DynamoDB > Tables > cruddur-messages > Turn on DynamoDB stream, choose "new image"
-- On AWS in VPC, create an endpoint named `cruddur-ddb`, choose services with DynamoDB, and select the default VPC and route table
-- On AWS in Lambda, create a new function named `cruddur-messaging-stream` and enable VPC in its advanced settings; deploy the code as seen in `aws/lambdas/cruddur-messaging-stream.py`; add permission of `AWSLambdaInvocation-DynamoDB` to the Lambda IAM role; more permissions can be added by creating inline policies as seen in `aws/policies/cruddur-message-stream-policy.json`
-- On AWS in DynamoDB, create a new trigger, select `cruddur-messaging-stream`
+- On AWS in the VPC console, create an endpoint named `cruddur-ddb`, choose services with DynamoDB, and select the default VPC and route table
+- On AWS in the Lambda console, create a new function named `cruddur-messaging-stream` and enable VPC in its advanced settings; deploy the code as seen in `aws/lambdas/cruddur-messaging-stream.py`; add permission of `AWSLambdaInvocation-DynamoDB` to the Lambda IAM role; more permissions can be added by creating inline policies as seen in `aws/policies/cruddur-message-stream-policy.json`
+- On AWS in the DynamoDB console, create a new trigger and select `cruddur-messaging-stream`
 
-Now if we visit the frontend and sign in, it's empty under the messages tab. To create a new message in a new message group with Bayko, visit `https://<frontend_address>/messages/new/bayko`, messages can be created and updated as seen in the screenshot below.
+Now if we compose up, visit the frontend and sign in, it's empty under the messages tab, because there is no data in our AWS DynamoDB. To create a new message in a new message group with Bayko, visit `https://<frontend_address>/messages/new/bayko`, messages can be created and updated as seen in the screenshot below.
 
 ![Proof of seed dynamodb](assets/week05-working-dynamodb-stream.png)
 
-There should be no error observed on AWS in CloudWatch > Log groups > /aws/lambda/cruddur-messaging-stream as shown in the screenshots below.
+If everything works, there is no error observed on AWS in CloudWatch > Log groups > /aws/lambda/cruddur-messaging-stream as shown in the screenshots below.
 
 ![Proof of seed dynamodb](assets/week05-working-dynamodb-stream-log.png)
