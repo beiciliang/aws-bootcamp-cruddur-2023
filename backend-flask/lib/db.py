@@ -104,7 +104,7 @@ class Db:
                 cur.execute(wrapped_sql, params)
                 json = cur.fetchone()
                 if json == None:
-                    "{}"
+                    return "{}"
                 else:
                     return json[0]
 
