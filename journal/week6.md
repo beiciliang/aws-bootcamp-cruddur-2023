@@ -1,6 +1,6 @@
 # Week 6 — Deploying Containers
 
-Based on what I've done in [week5](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week5.md), gitpod the main branch and do the following steps (in the end, changes are committed to the main branch). As this week was delivered together with [Week 7](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week7.md), where I attached screenshots as the proofs of my working application.
+Based on what I've done in [week5](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week5.md), gitpod the main branch and do the following steps (in the end, changes are committed to the main branch). This week was delivered together with [Week 7](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week7.md), where I attached screenshots as the proofs of my working application.
 
 - [Preparation](#preparation)
 - [ECS Cluster and ECR Repo](#ecs-cluster-and-ecr-repo)
@@ -242,7 +242,7 @@ Provision and configure Application Load Balancer along with target groups via A
 - Basic configurations: name `cruddur-alb`, Internet-facing, IPv4 address type;
 - Network mapping: default VPC, select first three availability zones;
 - Security groups: create a new security group named `cruddur-alb-sg`, set inbound rules of HTTP and HTTPS from anywhere, and Custom TCP of 4567 and 3000 from anywhere (set description as TMP1 and TMP2); In addition, edit inbound rules of security group `crud-srv-sg`, instead of anywhere, set port source from `cruddur-alb-sg`, set description of port 4567 as ALBbackend, and port 3000 as ALBfrontend;
-- Listeners and routing: HTTP:4567 with a new target group named `cruddur-backend-flask-tg`, select type as IP addresses, set HTTP:4567, set health check as /api/health-check with 3 healthy threshold, get its arn to put in `aws/json/service-backend-flask.json`; Add another listener HTTP:3000 with another target group created named `cruddur-frontend-react-js`, don't care about health check, set 3 healthy threshold, get its arn to put in `aws/json/service-backend-flask.json`.
+- Listeners and routing: HTTP:4567 with a new target group named `cruddur-backend-flask-tg`, select type as IP addresses, set HTTP:4567, set health check as `/api/health-check` with 3 healthy threshold, get its arn to put in `aws/json/service-backend-flask.json`; Add another listener HTTP:3000 with another target group created named `cruddur-frontend-react-js`, don't care about health check, set 3 healthy threshold, get its arn to put in `aws/json/service-frontend-react-js.json`.
 
 ## Domain Configuration
 
@@ -269,9 +269,9 @@ aws ecs create-service --cli-input-json file://aws/json/service-backend-flask.js
 aws ecs create-service --cli-input-json file://aws/json/service-frontend-react-js.json
 ```
 
-Before check the domain https://beici-demo.xyz/ to see if the application works, we can check the backend https://api.beici-demo.xyz/api/health-check that should return a success, and https://api.beici-demo.xyz/api/activities/home should be able to retrieve data from RDS.
+Before checking the domain https://beici-demo.xyz/ to see if the application works, we can check the backend https://api.beici-demo.xyz/api/health-check that should return a success, and https://api.beici-demo.xyz/api/activities/home that should be able to retrieve data from RDS.
 
-Since I am the only user signed up in the app, it's impossible to send messages to others. To do this, I can insert a mock user to RDS, so I can send messages using https://beici-demo.xyz/messages/new/londo:
+Since I am the only user signed up in the app, it's impossible to send messages to others. To do this, I can insert a mock user to RDS using the commands below, then I can send messages using https://beici-demo.xyz/messages/new/londo:
 
 ```sh
 ./bin/db/connect prod
@@ -284,4 +284,8 @@ select * from users;
 \q
 ```
 
-Now we can check our domain https://beici-demo.xyz/ to see if everything works. If it is, we can safely remove TMP1 and TMP2 inbound rules in the security group `cruddur-alb-sg`, and delete HTTP:4567 and HTTP:3000 listeners in load balancer `cruddur-alb`. Then we can only access the application through the domain.
+Now we can check our domain https://beici-demo.xyz/ to see if everything works. If it is, we can safely remove TMP1 and TMP2 inbound rules in the security group `cruddur-alb-sg`, and delete HTTP:4567 and HTTP:3000 listeners in load balancer `cruddur-alb` (they were there for debugging more easily). Now we can only access the application through the domain.
+
+If changes are made for backend/frontend, use the scripts in `./bin/backend/` and `./bin/frontend/` to build, tag, push the image to ECR, and update the service with a force deployment.
+
+You may see "503 Service Temporarily Unavailable" on my domain. This is because I've updated the Fargate services which set the task to 0 in order to save my AWS budget.
