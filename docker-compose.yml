@@ -62,7 +62,7 @@ services:
 # the name flag is a hack to change the default prepend folder
 # name when outputting the image names
 networks: 
-  internal-network:
+  cruddur-net:
     driver: bridge
     name: cruddur-net
 
