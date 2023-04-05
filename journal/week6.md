@@ -246,9 +246,9 @@ Provision and configure Application Load Balancer along with target groups via A
 
 ## Domain Configuration
 
-I've registered a domain name `beici-demo.xyz` for this bootcamp via porkbun. We can manage the domain using Route53 via hosted zone, create an SSL certificate via ACM, setup a record set for naked domain to point to frontend-react-js, and setup a record set for api subdomain to point to the backend-flask:
+I've registered a domain name `beici-demo.xyz` for this bootcamp via [porkbun](https://porkbun.com/). We can manage the domain using Route53 via hosted zone, create an SSL certificate via ACM, setup a record set for naked domain to point to frontend-react-js, and setup a record set for api subdomain to point to the backend-flask:
 
-- At Route 53 > Hosted zones, create a new one with the registered domain name and the public. type; Copy the values presented in the NS record type, and paste them into the porkbun nameservers
+- At Route 53 > Hosted zones, create a new one with the registered domain name and the public type; Copy the values presented in the NS record type, and paste them into the porkbun nameservers (changes to your authoritative nameservers may take up to a couple of hours to propagate worldwide).
 - At Certificate Manger, request a public certificate, add domain names of `beici-demo.xyz` and `*.beici-demo.xyz`, then enter the created certificate and click "Create records in Route 53", finally Route 53 will show two CNAME records.
 - At Load Balancers, add a listener to make HTTP:80 redirect to HTTPS:443, and another one to make HTTPS:443 forward to frontend with certificate we created; edit rules for HTTPS:443 to add a new IF which sets Host Header as `api.domain.name` and sets THEN forward to `cruddur-backend-flask-tg`.
 - At Route 53 > Hosted zones > beici-xyz.demo, create a record without a record name, set type as "A - Route Traffic to an IPv4 address and some AWS resources", set route traffic as "Alias to Application and Classic Load Balancer" with the right region and load balancer, set routing policy as simple routing; do it again with record name `api.beici-xyz.com`; do `curl https://api.beici-demo.xyz/api/health-check` should return success.
