@@ -1,6 +1,6 @@
 # Week 7 — Solving CORS with a Load Balancer and Custom Domain
 
-This week was delivered together with Week 7. Check my [week6 journal](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week6.md) for details. Here I only attach screenshots as the proofs for my working application.
+Week 7 was delivered together with Week 6. Check my [week6 journal](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week6.md) for details. Here I only attach screenshots as the proofs for my working application.
 
 1. Created services for `backend-flask` and `frontend-react-js` under the `cruddur` cluster on ECS.
 
