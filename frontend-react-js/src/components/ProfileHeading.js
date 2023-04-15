@@ -1,8 +1,10 @@
 import './ProfileHeading.css';
 import EditProfileButton from '../components/EditProfileButton';
 
+import ProfileAvatar from 'components/ProfileAvatar'
+
 export default function ProfileHeading(props) {
-  const backgroundImage = 'url("https://assets.beici-demo.xyz/banners/banner.jpg")';
+  const backgroundImage = 'url("https://assets.cruddur.com/banners/banner.jpg")';
   const styles = {
     backgroundImage: backgroundImage,
     backgroundSize: 'cover',
@@ -12,19 +14,17 @@ export default function ProfileHeading(props) {
   <div className='activity_feed_heading profile_heading'>
     <div className='title'>{props.profile.display_name}</div>
     <div className="cruds_count">{props.profile.cruds_count} Cruds</div>
-    <div class="banner" style={styles} >
-      <div className="avatar">
-        <img src="https://assets.beici-demo.xyz/avatars/data.jpg"></img>
-      </div>
+    <div className="banner" style={styles} >
+      <ProfileAvatar id={props.profile.cognito_user_uuid} />
     </div>
-    <div class="info">
-      <div class='id'>
+    <div className="info">
+      <div className='id'>
         <div className="display_name">{props.profile.display_name}</div>
         <div className="handle">@{props.profile.handle}</div>
       </div>
       <EditProfileButton setPopped={props.setPopped} />
     </div>
-    <div class="bio">{props.profile.bio}</div>
+    <div className="bio">{props.profile.bio}</div>
 
   </div>
   );
