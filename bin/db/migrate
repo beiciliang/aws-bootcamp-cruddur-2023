@@ -50,5 +50,5 @@ for migration_file in migration_files:
             mod = importlib.import_module(module_name)
             print('=== running migration: ', module_name)
             mod.migration.migrate()
-            timestamp = str(time.time()).replace(".", "")
+            timestamp = str(int(time.time()))
             last_successful_run = set_last_successful_run(timestamp)
