@@ -4,7 +4,7 @@ import EditProfileButton from '../components/EditProfileButton';
 import ProfileAvatar from 'components/ProfileAvatar'
 
 export default function ProfileHeading(props) {
-  const backgroundImage = 'url("https://assets.cruddur.com/banners/banner.jpg")';
+  const backgroundImage = 'url("https://assets.beici-demo.xyz/banners/banner.jpg")';
   const styles = {
     backgroundImage: backgroundImage,
     backgroundSize: 'cover',
