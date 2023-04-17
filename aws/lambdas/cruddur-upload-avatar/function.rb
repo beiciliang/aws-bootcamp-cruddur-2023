@@ -10,7 +10,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-XXX.XXX.gitpod.io",
+        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-kx93r9p1cxe.ws-eu94.gitpod.io",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200
@@ -38,7 +38,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-XXX.XXX.gitpod.io",
+        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-kx93r9p1cxe.ws-eu94.gitpod.io",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200, 
