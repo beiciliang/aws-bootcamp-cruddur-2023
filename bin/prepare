@@ -1,0 +1,23 @@
+#! /usr/bin/bash
+
+set -e # stop if it fails at any point
+
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="Prepare local DB and DynamoDB"
+printf "${CYAN}====== ${LABEL}${NO_COLOR}\n"
+
+ABS_PATH=$(readlink -f "$0")
+BIN_PATH=$(dirname $ABS_PATH)
+# set the absolute path to the file
+db_setup_filepath="$BIN_PATH/db/setup"
+ddb_schema_filepath="$BIN_PATH/ddb/schema-load"
+ddb_seed_filepath="$BIN_PATH/ddb/seed"
+# get the relative path to the file from the current directory
+db_setup_relative_path=$(realpath --relative-base="$PWD" "$db_setup_filepath")
+ddb_schema_relative_path=$(realpath --relative-base="$PWD" "$ddb_schema_filepath")
+ddb_seed_relative_path=$(realpath --relative-base="$PWD" "$ddb_seed_filepath")
+
+"./$db_setup_relative_path"
+"./$ddb_schema_relative_path"
+"./$ddb_seed_relative_path"
