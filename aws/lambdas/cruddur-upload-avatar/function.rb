@@ -10,7 +10,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-kx93r9p1cxe.ws-eu94.gitpod.io",
+        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-n3nvpmn1h73.ws-eu94.gitpod.io",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200
@@ -24,7 +24,7 @@ def handler(event:, context:)
 
     # decoded_token = JWT.decode token, nil, false
     # cognito_user_uuid = decoded_token[0]['sub']
-    cognito_user_id = event["requestContext"]["authorizer"]["lambda"]["sub"]
+    cognito_user_uuid = event["requestContext"]["authorizer"]["lambda"]["sub"]
 
     puts({step:'presign url', sub_value: cognito_user_id}.to_json)
 
@@ -42,7 +42,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-kx93r9p1cxe.ws-eu94.gitpod.io",
+        "Access-Control-Allow-Origin": "https://3000-beiciliang-awsbootcampc-n3nvpmn1h73.ws-eu94.gitpod.io",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200, 
