@@ -1,6 +1,6 @@
 # Week 8 — Serverless Image Processing
 
-Based on what I've done in previous weeks with tag [week607](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week0607), from which open a new gitpod workspace and do the following steps (in the end, changes are committed to the branch of [week-8](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8) and then merged to the main branch):
+Based on what I've done in previous weeks with tag [week0607](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week0607), from which open a new gitpod workspace and do the following steps (in the end, changes are committed to the branch of [week-8](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8) and then merged to the main branch):
 
 - [Preparation](#preparation)
 - [Implement CDK Stack](#implement-cdk-stack)
@@ -15,7 +15,7 @@ Based on what I've done in previous weeks with tag [week607](https://github.com/
 
 This week we need to use CDK (Cloud Development Kit) to create S3 buckets, Lambda functions, SNS topics, etc., allowing users to upload their avatars to update their profiles.
 
-There are some commands to run every time before and after docker compose up. To be done more efficiently, create the following scripts as seen in [./bin/bootstrap](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-8/bin/bootstrap) and [./bin/prepare](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-8/bin/prepare):
+There are some commands to run every time before and after docker compose up. To be done more efficiently, create the following scripts as seen in `./bin/bootstrap` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-8/bin/bootstrap)) and `./bin/prepare` ([code](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/week-8/bin/prepare)):
 
 ```sh
 cd /workspace/aws-bootcamp-cruddur-2023/bin
@@ -25,7 +25,7 @@ chmod u+x bootstrap prepare
 
 ## Implement CDK Stack
 
-Firstly, manually create a S3 bucket named `assets.<domain_name>` (e.g., `assets.beici-demo.xyz`), which will be used for serving processed images in the profile page. Then create a folder named `banners`, and upload a `banner.jpg` in there.
+Firstly, manually create a S3 bucket named `assets.<domain_name>` (e.g., `assets.beici-demo.xyz`), which will be used for serving the processed images in the profile page. In this bucket, create a folder named `banners`, and then upload a `banner.jpg` into the folder.
 
 Secondly, export following env vars according to your domain name and another S3 bucket (e.g., `beici-cruddur-uploaded-avatars`), which will be created by CDK later for saving the original uploaded avatar images:
 
@@ -36,7 +36,7 @@ export UPLOADS_BUCKET_NAME=beici-cruddur-uploaded-avatars
 gp env UPLOADS_BUCKET_NAME=beici-cruddur-uploaded-avatars
 ```
 
-In order to process uploaded images to a specific dimension, a Lambda function will be created by CDK. This function and related packages are specified in the scripts created by the following commands ([repo](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8/aws/lambdas/process-images)):
+In order to process uploaded images into a specific dimension, a Lambda function will be created by CDK. This function and related packages are specified in the scripts ([repo](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8/aws/lambdas/process-images)) created by the following commands:
 
 ```sh
 mkdir -p aws/lambdas/process-images
@@ -46,7 +46,7 @@ npm init -y
 npm install sharp @aws-sdk/client-s3
 ```
 
-To check if the created Lambda function works or not, create scripts by the following commands ([repo](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8/bin/avatar)) and upload a profile picture named `data.jpg` inside the created folder `files`:
+To check if the created Lambda function works or not, create scripts ([repo](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-8/bin/avatar)) by the following commands and then upload a profile picture named `data.jpg` inside the created folder `files`:
 
 ```sh
 cd /workspace/aws-bootcamp-cruddur-2023
@@ -80,9 +80,13 @@ cd /workspace/aws-bootcamp-cruddur-2023
 cd thumbing-serverless-cdk
 ```
 
-Now run `cdk synth` you can debug and observe the generated `cdk.out`; run `cdk bootstrap "aws://${AWS_ACCOUNT_ID}/${AWS_DEFAULT_REGION}"` (just once); Finally run `cdk deploy`, you can observe your what have been created on AWS CloudFormation stack of `ThumbingServerlessCdkStack`.
+To create AWS CloudFormation stack `ThumbingServerlessCdkStack`:
 
-After running `./bin/avatar/upload`, at AWS we can see there is `data.jpg` uploaded into the `beici-cruddur-uploaded-avatars` S3 bucket, which triggers `ThumbLambda` function to process the image, and then saves the processed image into the `avatars` folder in the `assets.beici-demo.xyz` S3 bucket.
+- run `cdk synth` you can debug and observe the generated `cdk.out`
+- run `cdk bootstrap "aws://${AWS_ACCOUNT_ID}/${AWS_DEFAULT_REGION}"` (just once)
+- finally run `cdk deploy`, you can observe your what have been created on AWS CloudFormation
+
+Now, after running `./bin/avatar/upload`, at AWS I can observe that the `data.jpg` can be uploaded into the `beici-cruddur-uploaded-avatars` S3 bucket, which triggers `ThumbLambda` function to process the image, and then saves the processed image into the `avatars` folder in the `assets.beici-demo.xyz` S3 bucket.
 
 ## Serving Avatars via CloudFront
 
@@ -99,7 +103,7 @@ Create a distribution by:
 
 Remember to copy the created policy to the `assets.<your_domain_name>` bucket by editing its bucket policy.
 
-In order to visit https://assets.<your_domain_name>/avatars/data.jpg to see the processed image, we need to create a record via Route 53:
+In order to visit `https://assets.<your_domain_name>/avatars/data.jpg` to see the processed image, we need to create a record via Route 53:
 
 - set record name as `assets.<your_domain_name>`
 - turn on alias, route traffic to alias to CloudFront distribution
