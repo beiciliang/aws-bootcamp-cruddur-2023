@@ -18,6 +18,6 @@ db_setup_relative_path=$(realpath --relative-base="$PWD" "$db_setup_filepath")
 ddb_schema_relative_path=$(realpath --relative-base="$PWD" "$ddb_schema_filepath")
 ddb_seed_relative_path=$(realpath --relative-base="$PWD" "$ddb_seed_filepath")
 
-source "$db_setup_relative_path"
-python "$ddb_schema_relative_path"
-python "$ddb_seed_relative_path"
+"./$db_setup_relative_path"
+"./$ddb_schema_relative_path"
+"./$ddb_seed_relative_path"
