@@ -2,6 +2,11 @@
 
 Based on what I've done in previous [week8](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week8.md), open a new gitpod workspace and do the following steps (in the end, changes are committed to the branch of [week-9](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-9) and then merged to the main branch):
 
+- [Preparation](#preparation)
+- [AWS CodeBuild](#aws-codebuild)
+- [AWS CodePipeline](#aws-codepipeline)
+- [Test Pipeline](#test-pipeline)
+
 ## Preparation
 
 Create the following two scripts:
@@ -12,6 +17,8 @@ Create the following two scripts:
 Create a branch named `prod`, which will be used for AWS CodeBuild and CodePipeline later.
 
 At AWS ECS, update desired tasks in the service to 1, if this was set to 0 before.
+
+Before this week, if our backend is updated and needed to be deployed into production, we need to run `./bin/backend/build`, `./bin/backend/push`, and `./bin/backend/deploy`. With the following setup, this can be done in a CI/CD fashion.
 
 ## AWS CodeBuild
 
