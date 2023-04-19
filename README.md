@@ -1,5 +1,7 @@
 # AWS Cloud Project Bootcamp - Cruddur
 
+![](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiV0xHWHgweStGNVB5S2VFbktBNUo2ZnV3M1VWL1NHeVRuUWdSdTJ4NDFieW5QUXpTOU5FS1cwL2tZQzVHUE1LdFZLT2hWV1ZQSForeXU0eUY4ZWFtTklvPSIsIml2UGFyYW1ldGVyU3BlYyI6IkpocjhlVndVYmxwbzRpd0siLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
+
 ![Cruddur Graphic](_docs/assets/cruddur-banner.jpg)
 
 - Codebase: this repo was created from [this template](https://github.com/ExamProCo/aws-bootcamp-cruddur-2023)
@@ -18,7 +20,7 @@ The `/journal` directory contains:
 - [x] [Week 6 - Deploying Containers](journal/week6.md)
 - [x] [Week 7 - Solving CORS with a Load Balancer and Custom Domain](journal/week7.md)
 - [x] [Week 8 - Serverless Image Processing](journal/week8.md)
-- [ ] [Week 9 - CI/CD with CodePipeline, CodeBuild and CodeDeploy](journal/week9.md)
+- [x] [Week 9 - CI/CD with CodePipeline, CodeBuild and CodeDeploy](journal/week9.md)
 - [ ] [Week 10 - CloudFormation Part 1](journal/week10.md)
 - [ ] [Week 11 - CloudFormation Part 2](journal/week11.md)
 - [ ] [Week 12 - Modern APIs](journal/week12.md)
