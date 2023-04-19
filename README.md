@@ -1,5 +1,7 @@
 # AWS Cloud Project Bootcamp - Cruddur
 
+![](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiV0xHWHgweStGNVB5S2VFbktBNUo2ZnV3M1VWL1NHeVRuUWdSdTJ4NDFieW5QUXpTOU5FS1cwL2tZQzVHUE1LdFZLT2hWV1ZQSForeXU0eUY4ZWFtTklvPSIsIml2UGFyYW1ldGVyU3BlYyI6IkpocjhlVndVYmxwbzRpd0siLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
+
 ![Cruddur Graphic](_docs/assets/cruddur-banner.jpg)
 
 - Codebase: this repo was created from [this template](https://github.com/ExamProCo/aws-bootcamp-cruddur-2023)
