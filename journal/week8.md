@@ -107,8 +107,15 @@ In order to visit `https://assets.<your_domain_name>/avatars/data.jpg` to see th
 
 - set record name as `assets.<your_domain_name>`
 - turn on alias, route traffic to alias to CloudFront distribution
+- in my case, you can see my profile at https://assets.beici-demo.xyz/avatars/data.jpg
 
-In my case, you can see my profile at https://assets.beici-demo.xyz/avatars/data.jpg.
+Since we don't use versioned file names for a user's avatar, CloudFront edge caches old avatar. Until the old one expires, you will not immediately see the new avatar after updating the profile. Therefore, we need to [invalidate files](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html) by creating an invalidation:
+
+- go to the distribution we created
+- under the Invalidations tab, click create
+- add object path `/avatars/*`
+
+This ensures that CloudFront will always serve the latest avatar uploaded by the user.
 
 ## Backend and Frontend for Profile Page
 
