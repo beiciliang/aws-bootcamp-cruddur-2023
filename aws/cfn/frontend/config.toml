@@ -1,0 +1,9 @@
+[deploy]
+bucket = 'cfn-artifacts-beici'
+region = 'us-east-1'
+stack_name = 'CrdFrontend'
+
+[parameters]
+CertificateArn = 'arn:aws:acm:us-east-1:366939446291:certificate/f9d52886-d062-48c7-b7f6-158993c9d9b7'
+WwwBucketName = 'www.beici-demo.xyz'
+RootBucketName = 'beici-demo.xyz'
