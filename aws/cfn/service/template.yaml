@@ -34,7 +34,7 @@ Parameters:
     Type: String
     Default: backend-flask
   EcrImage:
-    Type: AWS::SSM::Parameter::Value<String>
+    Type: String
     Default: "366939446291.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest"
   EnvOtelServiceName:
     Type: String
@@ -43,10 +43,10 @@ Parameters:
     Type: String
     Default: https://api.honeycomb.io
   EnvAWSCognitoUserPoolId:
-    Type: AWS::SSM::Parameter::Value<String>
+    Type: String
     Default: us-east-1_GN7uh5LmT
   EnvCognitoUserPoolClientId:
-    Type: AWS::SSM::Parameter::Value<String>
+    Type: String
     Default: 3imco9n5ju2bngsltjdvfvnusl
   EnvFrontendUrl:
     Type: String
@@ -191,7 +191,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceExecutionRole
+      RoleName: CruddurServiceExecutionRoleCFN
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -200,7 +200,7 @@ Resources:
               Service: "ecs-tasks.amazonaws.com"
             Action: "sts:AssumeRole"
       Policies:
-        - PolicyName: "cruddur-execution-policy"
+        - PolicyName: "cruddur-execution-policy-cfn"
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -227,7 +227,7 @@ Resources:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CruddurServiceTaskRole
+      RoleName: CruddurServiceTaskRoleCFN
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -236,7 +236,7 @@ Resources:
               Service: "ecs-tasks.amazonaws.com"
             Action: "sts:AssumeRole"
       Policies:
-        - PolicyName: "cruddur-task-policy"
+        - PolicyName: "cruddur-task-policy-cfn"
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
