@@ -1,12 +1,12 @@
 tasks:
   - name: aws-sam
-    init: |
+    before: |
       cd /workspace
       wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
       unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
       sudo ./sam-installation/install
       sudo rm -rf ./aws-sam-cli-linux-x86_64.zip
-      sudo rm -rf ./aws-sam-cli-linux-x86_64
+      sudo rm -rf ./sam-installation
       cd $THEIA_WORKSPACE_ROOT
   - name: cfn
     before: |

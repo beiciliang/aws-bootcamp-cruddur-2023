@@ -8,7 +8,7 @@ CONFIG_PATH="/workspace/aws-bootcamp-cruddur-2023/ddb/config.toml"
 
 echo ">>> Validate <<<"
 
-sam validate -t $ABS_FILEPATH/template.yaml
+sam validate -t $TEMPLATE_PATH
 
 echo ">>> Build <<<"
 # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-build.html

@@ -1,6 +1,6 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: |
+Description: | 
   - DynamoDB Table
   - DynamoDB Stream
 Parameters:
@@ -20,21 +20,21 @@ Resources:
   DynamoDBTable:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
     Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
+    Properties: 
+      AttributeDefinitions: 
         - AttributeName: message_group_uuid
           AttributeType: S
         - AttributeName: pk
           AttributeType: S
         - AttributeName: sk
           AttributeType: S
-      TableClass: STANDARD
-      KeySchema:
+      TableClass: STANDARD 
+      KeySchema: 
         - AttributeName: pk
           KeyType: HASH
         - AttributeName: sk
           KeyType: RANGE
-      ProvisionedThroughput:
+      ProvisionedThroughput: 
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
       BillingMode: PROVISIONED
@@ -48,7 +48,7 @@ Resources:
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
-          ProvisionedThroughput:
+          ProvisionedThroughput: 
             ReadCapacityUnits: 5
             WriteCapacityUnits: 5
       StreamSpecification:
@@ -90,12 +90,12 @@ Resources:
     Properties:
       RoleName: CruddurDdbStreamExecRole
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: '2012-10-17'
         Statement:
-          - Effect: "Allow"
+          - Effect: 'Allow'
             Principal:
-              Service: "lambda.amazonaws.com"
-            Action: "sts:AssumeRole"
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
       Policies:
         - PolicyName: "LambdaExecutionPolicy"
           PolicyDocument:
