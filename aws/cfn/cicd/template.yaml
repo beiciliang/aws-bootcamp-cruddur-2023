@@ -1,14 +1,13 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: |
-  - CodeStar connection to V2 Github
+  - CodeStar Connection V2 Github
   - CodePipeline
-  - CodeBuild
-
+  - Codebuild
 Parameters:
   GitHubBranch:
     Type: String
     Default: prod
-  GitHubRepo:
+  GithubRepo:
     Type: String
     Default: "beiciliang/aws-bootcamp-cruddur-2023"
   ClusterStack:
@@ -19,9 +18,8 @@ Parameters:
     Type: String
   BuildSpec:
     Type: String
-
 Resources:
-  CodeBuild:
+  Codebuild:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-stack.html
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -57,7 +55,7 @@ Resources:
                 - Name: Source
               Configuration:
                 ConnectionArn: !Ref CodeStarConnection
-                FullRepositoryId: !Ref GitHubRepo
+                FullRepositoryId: !Ref GithubRepo
                 BranchName: !Ref GitHubBranch
                 OutputArtifactFormat: "CODE_ZIP"
         - Name: Build
@@ -74,7 +72,7 @@ Resources:
               OutputArtifacts:
                 - Name: ImageDefinition
               Configuration:
-                ProjectName: !GetAtt CodeBuild.Outputs.CodeBuildProjectName
+                ProjectName: !GetAtt Codebuild.Outputs.CodeBuildProjectName
                 BatchEnabled: false
         # https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-ECS.html
         - Name: Deploy
@@ -93,9 +91,11 @@ Resources:
                 DeploymentTimeout: "10"
                 ClusterName:
                   Fn::ImportValue: !Sub ${ClusterStack}ClusterName
-                # we decided not to use a cross stack so we can tear down backend service independently
+                # We decided not use a cross-stack so we can tear
+                # down a service separate from it.
                 ServiceName: backend-flask
-
+                #  Fn::ImportValue:
+                #    !Sub ${ServiceStack}ServiceName
   CodePipelineRole:
     Type: AWS::IAM::Role
     Properties:
@@ -111,7 +111,7 @@ Resources:
         # When the Application Source downloads the code.
         # It needs to zip it and place it a bucket, so we need
         # to supply an artifacts bucket.
-        - PolicyName: !Sub ${AWS::StackName}S3ArtifactsAccess
+        - PolicyName: !Sub ${AWS::StackName}S3ArtifactAccess
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -171,6 +171,8 @@ Resources:
                   - codebuild:StartBuild
                   - codebuild:StopBuild
                   - codebuild:RetryBuild
+                  # even though we are not Batch for CodeBuild
+                  # AWS Still requires permissions
                   - codebuild:BatchGetBuilds
                 Effect: Allow
                 Resource: !Join
@@ -180,4 +182,4 @@ Resources:
                     - ":"
                     - !Ref AWS::AccountId
                     - ":project/"
-                    - !GetAtt CodeBuild.Outputs.CodeBuildProjectName
+                    - !GetAtt Codebuild.Outputs.CodeBuildProjectName

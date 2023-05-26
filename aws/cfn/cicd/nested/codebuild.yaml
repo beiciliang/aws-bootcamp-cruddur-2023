@@ -1,17 +1,17 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: |
-  Codebuild used for baking container image
-   - Codebuild Project
-   - Codebuild Project Role
+  Codebuild used for baking container images
+  - Codebuild Project
+  - Codebuild Project Role
 
 Parameters:
   LogGroupPath:
     Type: String
-    Description: "The log group path for codebuild"
+    Description: "The log group path for CodeBuild"
     Default: "/cruddur/codebuild/bake-service"
   LogStreamName:
     Type: String
-    Description: "The log group path for codebuild"
+    Description: "The log group path for CodeBuild"
     Default: "backend-flask"
   CodeBuildImage:
     Type: String
@@ -21,27 +21,18 @@ Parameters:
     Default: BUILD_GENERAL1_SMALL
   CodeBuildTimeoutMins:
     Type: Number
-    Default: 15
-  CodeBuildQueueTimeoutMins:
-    Type: Number
-    Default: 30
-  CodeBuildName:
-    Type: String
-    Default: CrdCodeBuild
-  ArtifactBucketName:
-    Type: String
+    Default: 5
   BuildSpec:
     Type: String
-    Default: backend-flask/buildspec.yml
-
+    Default: "buildspec.yaml"
+  ArtifactBucketName:
+    Type: String
 Resources:
   CodeBuild:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: !Ref CodeBuildName
-      QueuedTimeoutInMinutes: !Ref CodeBuildQueueTimeoutMins
-      TimeoutInMinutes: !Ref CodeBuildTimeoutMins
+      QueuedTimeoutInMinutes: !Ref CodeBuildTimeoutMins
       ServiceRole: !GetAtt CodeBuildRole.Arn
       # PrivilegedMode is needed to build Docker images
       # even though we have No Artifacts, CodePipeline Demands both to be set as CODEPIPELINE
@@ -60,13 +51,6 @@ Resources:
       Source:
         Type: CODEPIPELINE
         BuildSpec: !Ref BuildSpec
-      # Triggers:
-      #     BuildType: BUILD
-      #     Webhook: True
-      #     FilterGroups:
-      #     - - Type: EVENT
-      #         Pattern: PULL_REQUEST_MERGED
-
   CodeBuildRole:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Type: AWS::IAM::Role
@@ -80,6 +64,16 @@ Resources:
         Version: "2012-10-17"
       Path: /
       Policies:
+        - PolicyName: !Sub ${AWS::StackName}S3ArtifactAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Action:
+                  - s3:*
+                Effect: Allow
+                Resource:
+                  - !Sub arn:aws:s3:::${ArtifactBucketName}
+                  - !Sub arn:aws:s3:::${ArtifactBucketName}/*
         - PolicyName: !Sub ${AWS::StackName}ECRPolicy
           PolicyDocument:
             Version: "2012-10-17"
@@ -125,26 +119,6 @@ Resources:
                 Resource:
                   - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:${LogGroupPath}*
                   - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:${LogGroupPath}:*
-        - PolicyName: !Sub ${AWS::StackName}SSM
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Action:
-                  - ssm:GetParameters
-                Effect: Allow
-                Resource:
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/cruddur*
-        - PolicyName: !Sub ${AWS::StackName}S3ArtifactsAccess
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Action:
-                  - s3:*
-                Effect: Allow
-                Resource:
-                  - !Sub arn:aws:s3:::${ArtifactBucketName}
-                  - !Sub arn:aws:s3:::${ArtifactBucketName}/*
-
 Outputs:
   CodeBuildProjectName:
     Description: "CodeBuildProjectName"
