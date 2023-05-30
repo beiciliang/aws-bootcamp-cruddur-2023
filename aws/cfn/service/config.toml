@@ -6,3 +6,4 @@ stack_name = 'CrdSrvBackendFlask'
 [parameters]
 EnvFrontendUrl = 'https://beici-demo.xyz'
 EnvBackendUrl = 'https://api.beici-demo.xyz'
+DDBMessageTable = 'CrdDdb-DynamoDBTable-OY28TEYFKEV3'

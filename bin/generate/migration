@@ -9,7 +9,7 @@ else:
     print("pass a filename: eg. ./bin/generate/migration add_bio_column")
     exit(0)
 
-timestamp = str(int(time.time()))
+timestamp = str(time.time()).replace(".", "")
 
 filename = f"{timestamp}_{name}.py"
 
@@ -20,27 +20,27 @@ file_content = f"""
 from lib.db import db
 
 class {klass}Migration:
-
     def migrate_sql():
         data = \"\"\"
         \"\"\"
         return data
-        
+
     def rollback_sql():
         data = \"\"\"
         \"\"\"
         return data
-        
+
     def migrate():
-        db.query_commit({klass}Migration.migrate_sql(),{{
+        db.query_commit({klass}Migration.migrate_sql(), {{
         }})
-        
+
     def rollback():
-        db.query_commit({klass}Migration.rollback_sql(),{{
+        db.query_commit({klass}Migration.rollback_sql(), {{
         }})
-        
-migration = AddBioColumnMigration
+
+migration = {klass}Migration
 """
+
 # remove leading and trailing new lines
 file_content = file_content.lstrip('\n').rstrip('\n')
 
