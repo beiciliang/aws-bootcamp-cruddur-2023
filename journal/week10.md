@@ -1,4 +1,4 @@
-# Week 9 — CloudFormation
+# Week 10 — CloudFormation and Clean Up
 
 Based on what I've done in previous [week9](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/blob/main/journal/week9.md), open a new gitpod workspace and do the following steps (in the end, changes are committed to the branch of [week-10](https://github.com/beiciliang/aws-bootcamp-cruddur-2023/tree/week-10) and then merged to the main branch):
 
