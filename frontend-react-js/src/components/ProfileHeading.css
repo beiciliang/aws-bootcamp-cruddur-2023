@@ -9,6 +9,7 @@
   height: 148px;
   border-radius: 999px;
   border: solid 8px var(--fg);
+  background-color: var(--fg);
 }
 
 .profile_heading .banner {
@@ -19,7 +20,7 @@
 .profile_heading .info {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: flex-start;
   padding: 16px;
 }
 
