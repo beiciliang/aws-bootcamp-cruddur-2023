@@ -34,7 +34,7 @@ Follow [this playlist](https://www.youtube.com/playlist?list=PLBfufR7vyJJ7k25byh
 
 In the end of this bootcamp, the Cruddur application looks like follows:
 
-![Cruddur Screenshot](assets/week10-home.png)
+![Cruddur Screenshot](journal/assets/week10-home.png)
 
 A user can:
 
