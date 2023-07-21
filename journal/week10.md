@@ -159,4 +159,4 @@ Here are some other changes to make profile editing work in production:
 
 After editing the bio and uploading an avatar, my profile page looks like follows:
 
-![Proof of Profile](assets/week10-home.png)
+![Proof of Profile](assets/week10-profile.png)
