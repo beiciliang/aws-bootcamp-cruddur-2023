@@ -149,3 +149,9 @@ Following screenshots present https://beici-demo.xyz/ is working:
 Now the homepage looks like follows:
 
 ![Proof of Homepage](assets/week10-home.png)
+
+Here are some other changes to make profile editing work in production:
+
+- In `frontend-react-js/src/components/ProfileForm.js`, hardcode the AWS API gateway endpoint to `gateway_url` as the env variable `REACT_APP_API_GATEWAY_ENDPOINT_URL` is not stored in production.
+- In S3 bucket saving the uploaded avatars (in my case `beici-cruddur-uploaded-avatars`), edit the CORS configuration, including setting `AllowedOrigins` as your cruddur domain and `AllowedMethods` as `POST,PUT`.
+- In Lambda `CruddurAvatarUpload`, edit `function.rb` by setting `Access-Control-Allow-Origin` as your cruddur domain and `Access-Control-Allow-Methods` as `OPTIONS,GET,POST,PUT`.
