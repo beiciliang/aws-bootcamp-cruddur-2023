@@ -3,6 +3,7 @@
   flex-direction: column;
   overflow: hidden;
   flex-shrink: 0;
+  background: rgb(--fg);
 }
 
 .activity_feed_primer {
