@@ -153,5 +153,10 @@ Now the homepage looks like follows:
 Here are some other changes to make profile editing work in production:
 
 - In `bin/frontend/static-build`, add env variable `REACT_APP_API_GATEWAY_ENDPOINT_URL` in order to be stored in production.
+- In `backend-flask/routes/users.py`, route for `/api/profile/update` include method of `PUT`.
 - In S3 bucket saving the uploaded avatars (in my case `beici-cruddur-uploaded-avatars`), edit the CORS configuration, including setting `AllowedOrigins` as your cruddur domain and `AllowedMethods` as `POST,PUT`.
 - In Lambda `CruddurAvatarUpload`, edit `function.rb` by setting `Access-Control-Allow-Origin` as your cruddur domain and `Access-Control-Allow-Methods` as `OPTIONS,GET,POST,PUT`.
+
+After editing the bio and uploading an avatar, my profile page looks like follows:
+
+![Proof of Profile](assets/week10-home.png)
