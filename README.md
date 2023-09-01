@@ -6,6 +6,7 @@
 
 - Codebase: this repo was created from [this template](https://github.com/ExamProCo/aws-bootcamp-cruddur-2023)
 - Cohort: 2023-A1 ([bootcamp website](https://aws.cloudprojectbootcamp.com/))
+- In the end, I obtained the AWS Cloud Project Bootcamp Certificate (Red Squad) with Demonstration of Exceptional Skills as a Cloud Engineer ([certificate at LinkedIn](https://www.linkedin.com/posts/beiciliang_aws-cloud-project-bootcamp-certificate-red-activity-7103294105505427457-TrRE?utm_source=share&utm_medium=member_desktop))!
 
 ## Journaling Homework
 
