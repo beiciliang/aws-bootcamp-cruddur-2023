@@ -27,7 +27,7 @@ The `/journal` directory contains:
 Note:
 
 - Week for clean up is also described in [Week 10 - CloudFormation](journal/week10.md).
-- My demo can be seen on https://beici-demo.xyz/, which just serves as a static website. This is because the task of Fargate services has been set to 0 in order to save my AWS budget.
+- My demo can be seen on ~~https://beici-demo.xyz/~~ (sorry domain expired, not available anymore), which just serves as a static website. This is because the task of Fargate services has been set to 0 in order to save my AWS budget.
 
 ## Instructions
 
